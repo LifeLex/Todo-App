@@ -31,7 +31,7 @@
                 </v-list>
             </v-menu>
 
-            <v-btn text color="grey">
+            <v-btn text color="grey" v-on:click="logout">
                 <span>sign out</span>
                 <v-icon right>mdi-exit-to-app</v-icon>
             </v-btn>
@@ -67,6 +67,7 @@
 </template>
 <script>
 import Popup from './Popup.vue'
+import firebase from 'firebase'
 export default {
     components:{
         Popup
@@ -79,7 +80,16 @@ export default {
                 { icon: 'folder', text: 'My Projects', route: '/projects' },
                 { icon: 'person', text: 'Team', route: '/team' },
             ],
-            snackbar: false
+            snackbar: false,
+            isLoggedIn: false,
+            currentUser:false
+        }
+    },
+    methods:{
+        logout: function () {
+            firebase.auth().signOut().then(()=>{
+                this.$router.push('/login')
+            });
         }
     }
     

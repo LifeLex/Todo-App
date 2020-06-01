@@ -3,35 +3,89 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Projects from '../views/Projects.vue'
 import Team from '../views/Team.vue'
+import Login from '@/components/Login'
+import Register from '@/components/Register'
+import firebase from 'firebase'
 
 Vue.use(VueRouter)
-
-  const routes = [
+const router = new VueRouter({
+   routes : [
   {
     path: '/',
     name: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {
+      requiresGuest: true
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: {
+      requiresGuest: true
+    }
   },
   {
     path: '/projects',
     name: 'Projects',
-    component: Projects
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: Projects,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/team',
     name: 'team',
-    component: Team
+    component: Team,
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+
 })
+router.beforeEach((to,from,next) =>{
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    //Check if not logged in
+    if(!firebase.auth().currentUser){
+      //Go to login
+      next({
+        path: '/login',
+        query:{
+          redirect: to.fullPath
+        }
+      });
+    }else{
+      //Proceed to the route
+      next();
+    }
+  }else if (to.matched.some(record => record.meta.requiresGuest)) {
+    if(firebase.auth().currentUser){
+      //Go to login
+      next({
+        path: '/',
+        query:{
+          redirect: to.fullPath
+        }
+      });
+    }else{
+      //Proceed to the route
+      next();
+    }
+  }else {
+    next();
+  }
+})
+
 
 export default router
