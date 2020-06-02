@@ -55,6 +55,7 @@ const router = new VueRouter({
 
 })
 router.beforeEach((to,from,next) =>{
+  //Check requiresAuth is true
   if (to.matched.some(record => record.meta.requiresAuth)) {
     //Check if not logged in
     if(!firebase.auth().currentUser){

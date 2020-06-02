@@ -42,7 +42,7 @@
                    <v-avatar size="100">
                        <img src="/avatar-1.png" alt="">
                    </v-avatar>
-                   <p class="white--text subheading mt-1">Alejandro</p>
+                   <p class="white--text subheading mt-1">{{user}}</p>
                </v-col>
            </v-row>
            <v-row>
@@ -82,7 +82,8 @@ export default {
             ],
             snackbar: false,
             isLoggedIn: false,
-            currentUser:false
+            currentUser:false,
+            user: firebase.auth().currentUser.email
         }
     },
     methods:{
