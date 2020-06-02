@@ -32,7 +32,7 @@
 <script>
 // import format from 'data-fns/format'
 import db from '@/fb'
-
+import firebase from 'firebase'
 export default {
     data(){
         return{
@@ -55,7 +55,7 @@ export default {
                     title: this.title,
                     content: this.content,
                     due: this.due,
-                    person: 'Alejandro',
+                    person: firebase.auth().currentUser.email,
                     status: 'ongoing'
                 }
             
