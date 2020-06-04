@@ -95,5 +95,6 @@ import firebase from 'firebase'
             e.preventDefault()
         }
     }
+    
   };
 </script>

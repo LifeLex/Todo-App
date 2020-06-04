@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Projects from '../views/Projects.vue'
 import Team from '../views/Team.vue'
+import Manage from '../views/Manage'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import firebase from 'firebase'
@@ -31,7 +32,7 @@ const router = new VueRouter({
     name: 'register',
     component: Register,
     meta: {
-      requiresGuest: true
+      requiresAuth: true
     }
   },
   {
@@ -46,6 +47,14 @@ const router = new VueRouter({
     path: '/team',
     name: 'team',
     component: Team,
+    meta: {
+      requiresAuth: true
+    } 
+  },
+  {
+    path: '/manageUsers',
+    name: 'manageUsers',
+    component: Manage,
     meta: {
       requiresAuth: true
     }

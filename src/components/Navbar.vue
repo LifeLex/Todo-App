@@ -30,11 +30,15 @@
                     </v-list-item>
                 </v-list>
             </v-menu>
-
+            <v-btn text color="grey"  router :to=this.register>
+                <span>Register user</span>
+                <v-icon right>mdi-exit-to-app</v-icon>
+            </v-btn>
             <v-btn text color="grey" v-on:click="logout">
                 <span>sign out</span>
                 <v-icon right>mdi-exit-to-app</v-icon>
             </v-btn>
+            
        </v-app-bar>
        <v-navigation-drawer v-model="drawer" app class="primary">
            <v-row>
@@ -79,10 +83,13 @@ export default {
                 { icon: 'mdi-view-dashboard', text: 'Dashboard', route: '/' },
                 { icon: 'folder', text: 'My Projects', route: '/projects' },
                 { icon: 'person', text: 'Team', route: '/team' },
+                { icon: 'mdi-account-switch', text: 'Manage Users', route: '/manageUsers' },
+
             ],
             snackbar: false,
             isLoggedIn: false,
             currentUser:false,
+            register: '/register',
             user: firebase.auth().currentUser.email
         }
     },
@@ -91,7 +98,10 @@ export default {
             firebase.auth().signOut().then(()=>{
                 this.$router.push('/login')
             });
-        }
+        },
+        // register: function(){
+        //     this.$router.push('/register')
+        // }
     }
     
 }
